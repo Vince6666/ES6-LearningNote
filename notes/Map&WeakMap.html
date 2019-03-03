@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>map/waekmap</title>
+</head>
+<body>
+    <script>
+        // Map 结构与Object对象相似，都是键值对的集合，不同的是：
+        //      Object 对象要求 key键名一定是字符串（ES6中还可以是Symbol类型）
+        //      Map 结构 的key键名的类型可以是任何类型的值
+
+        var m = new Map([
+            ["name","vince"],
+            ["age",20]
+        ]);
+        console.log(m);     // Map(2) {"name" => "vince", "age" => 20},其遍历器：[[Entries]]: Array(2)
+
+        var m1 = new Map();
+        m1.set("name","vince");
+        m1.set(1,2);
+        m1.set([1],[2,3]);     //键名和键值可以是任何一种数据类型，包括null,undefined
+        console.log(m1);    // {"name" => "vince", 1 => 2, Array(1) => Array(2)} 
+        // 如果重复设置一个已经存在的键名，那么后面的键值会覆盖前面的键值
+
+        var m1_name = m1.get("name");
+        console.log(m1_name);       // vince
+        var m1_color = m1.get("color"); 
+        console.log(m1_color);      // undefined
+
+        // 删除
+        console.log(m1.delete(1));
+        console.log(m1);        //Map(2) {"name" => "vince", Array(1) => Array(2)}
+
+        // has()、size属性
+        console.log(m1.has("name"));    //true
+        console.log(m1.size);   // 2
+
+        // 遍历
+        // entries():返回实例的键值对遍历器
+        // keys()：返回实例所有键名的遍历器。
+        // values() ：返回实例所有键值的遍历器
+        for(let [key,value] of m.entries()){
+            console.log(key+' '+value);
+            // 打印：name vince
+            //      age  20
+        }
+        for(let key of m.keys()){
+            console.log(key);
+        }
+        for(let value of m.values()){
+            console.log(value);
+        }
+        m.forEach(function(value,key){      // 第一个参数是value,第二个才是key
+            console.log(key+' '+value);
+        });
+
+
+        // WeakMap结构：键名只支持引用类型的数据，比如：数组，对象，函数。
+        // 跟Map一样，WeakMap也拥有get、has、delete方法，用法和用途都一样。
+        // 不同地方在于，WeakMap不支持clear方法，不支持遍历，
+        // 也就没有了keys、values、entries、forEach这4个方法，也没有属性size。
+        // 理由跟WeakSet结构一样：键名中的引用类型是弱引用，你永远不知道这个引用对象什么时候会被垃圾回收机制回收了，
+        // 如果这个引用类型的值被垃圾机制回收了，WeakMap实例中的对应键值对也会消失。
+
+
+
+
+    </script>
+</body>
+</html>

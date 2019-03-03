@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>iterator</title>
+</head>
+<body>
+    <script>
+        /* 几种传统的遍历的方法：
+            1、for()循环：缺点是代码不够简洁
+            2、forEach()循环：接受一个函数作为参数，足够简洁，但缺点是无法中断停止整个循环
+            3、for...in ：常用于对象的循环，如果用于数组的循环，每次循环中得到的i是字符串类型，而不是预料中的数字类型 
+        */
+
+        /* 关于 for...of */
+        /* for...of 是一种遍历数据结构的方法，可以遍历包括数组、对象、字符串、set和map结构等具有iterator接口的数据结构*/
+        // for...of 还可以遍历类数组，如DOM List
+        /* 优势：
+            1、写法比for循环简洁很多；
+            2、可以用break来终止整个循环，或者continute来跳出当前循环，继续后面的循环；
+            3、结合keys( )获取到循环的索引，并且是数字类型，而不是字符串类型。    
+        */
+        
+        // 例如遍历一个数组：
+        var arr = [1,2,3,4,5];
+        // 遍历数组的值：
+        for(let value of arr){  
+            console.log(value);
+        }
+        // 遍历数组的索引：(数字类型)
+        for(let index of arr.keys()){
+            console.log(index);
+        }
+
+
+        /* iterator 遍历器（迭代器） */
+        /* for...of 可以遍历几种数据类型，但是不能遍历普通的 Object对象，会报错误：obj[Symbol.iterator]不是一个function，
+            原因就是普通的 Object 对象并没有内置的 遍历器iterator ， 而其他那些如数组，set，map等都有内置的遍历器iterator 
+        */
+        /* 在控制台输入Object[Symbol.itertor] 会返回undefined，而其他数据类型如都会返回一个function */
+        /* Symbol.iterator 是Symbol 的 iterator属性，是一个特殊的 Symbol 值，当作为 prototype对象的属性名的时候，获取它需要
+            使用 [] 的形式：prototype[Symbol.iterator]，而不能用点的形式
+        */
+        /* 只要一个数据结果拥有一个 [Symbol.iterator]() 方法，就可以被for...of 遍历，这些称为可遍历对象；
+            如：数组，字符串，set，map结构
+         */
+        /* iterator遍历器的原理：
+            可遍历对象被for...of遍历的时候，先调用可遍历对象的[Symbol.iterator]()方法，返回一个iterator遍历器对象，
+            这个对象中有一个 next() 方法，然后就在遍历器对象上不断地调用next()方法，知道done的值为true的 时候，就表示遍历完成
+         */
+        // 例：
+        var arr1 = ['1','2','3'];
+        var iter = arr1[Symbol.iterator]();
+        console.log(iter);      // Array Iterator {}对象
+        console.log(iter.next());   // {value: "1", done: false}
+        console.log(iter.next());   // {value: "1", done: false}
+        console.log(iter.next());   // {value: "3", done: false}
+        console.log(iter.next());   // {value: undefined, done: true}
+
+    </script>
+
+    <script>
+        // 通过给Object对象手动添加[Symbol.iterator]()方法，即可以用for...of遍历普通Object对象
+        // 在[Symbol.iterator]方法中实现next()方法，next()方法返回的对象包含了value属性和done属性
+        let obj = {
+            0:"这是0",
+            1:"这是1",
+            2:"这是2",
+            length:3,
+
+            // 添加[Symbol.iterator]()方法
+            [Symbol.iterator] : function(){
+                let _this = this;
+                let index = 0;
+                return {
+                    next:() => {
+                        let value = _this[index];
+                        let done = (index >= _this.length);
+                        index++;
+                        return {value,done}
+                    }
+                }
+            }
+        };
+
+        for(let v of obj){
+            console.log(v);
+        }
+
+    </script>
+
+    <script>
+        // Generator函数（生成器函数）
+        /* 与普通函数的区别： 
+            1、Generator函数用function* 声明 ，普通函数用function声明
+            2、Generator函数内部有新的关键字：yield ,普通函数没有
+        */
+        /* generator函数被调用后返回一个生成器对象，等到生成器对象调用next()方法后函数才会继续执行，
+            直到遇到yield关键字，又会停止执行，并返回一个Object对象，其中包含value属性和done属性，
+            一直调用next()方法，直到返回的对象的done属性的值为true，调用结束。
+        */
+        /* yield 相当于暂停执行并返回信息，类似于普通函数的return的作用，不同的是：
+            return只能一次，相当于终止执行；而yield可以有多个，只是暂停执行，通过调用next()方法又可以恢复执行
+        */
+        function* Hello(name){
+            yield `hello ${name}`;  // 这里用到ES6特性，字符串模板 ${}
+            yield `How are you`;
+            yield `fine`;
+        }
+        var ite = Hello('vince');  
+        console.log(ite);       // 生成器对象,  也可以用for...of 遍历，则不需要自己判断done
+        console.log(ite.next());    // {value: "hello vince", done: false}
+        console.log(ite.next());    // {value: "How are you", done: false}
+        console.log(ite.next());    // {value: "fine", done: false}
+        console.log(ite.next());    // {value: undefined, done: true}
+ 
+        /* 总结：
+            1、Generator函数是ES6的一个重要的新特性，它可以控制函数内部的状态，依次遍历函数的每一个状态，
+                可以根据需要，让函数暂停执行或继续执行。
+            2、根据这个特点，可以利用Generator函数来实现异步操作的效果，原理是：
+                利用Generator函数暂停执行的作用，将异步操作的语句放在 yield 后面，通过执行next()进行调用
+         */
+    </script>
+</body>
+</html>

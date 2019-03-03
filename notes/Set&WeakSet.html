@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>set/weakset</title>
+</head>
+<body>
+    <script>
+        // Set是ES6的一种新的数据结构，可以理解为值的集合，与其他数据结构不同的的是，它的值不会有重复值
+        var s1 = new Set();
+        console.log(s1);     // Set(0) {}
+
+        // 给Set对象添加一些成员值，可以直接传入一个数组
+        var s2 = new Set([1,2,3]);
+        console.log(s2);     // Set(3) {1, 2, 3}
+
+        // 也可以用add()方法添加
+        var s3 = new Set();
+        s3.add(1);
+        s3.add(2);
+        s3.add(1);          // 添加两个1，结果只有一个，说明成员值是唯一的 
+        console.log(s3);    // Set(2) {1, 2}
+        // size属性：获取成员的个数
+        var len = s3.size;
+        console.log(len);   // 2
+
+        // 删除:delete()
+        console.log(s3.delete(2));  // 返回true
+        console.log(s3.delete(3));  // 删除不存在的值，返回false
+        console.log(s3);    // Set(1) {1}
+
+        // 清除所有：clear()
+        s3.clear();
+        console.log(s3);   // Set(0) {}
+
+        //has()方法：判断set结构中是否有指定的值
+        var s4 = new Set([2,4,5]);
+        console.log(s4.has(4));     // true
+        console.log(s4.has(3));     // false
+
+
+        // entries()方法
+        var ss = new Set(['a','b','c']);
+        iter = ss.entries();
+        console.log(iter);          // SetIterator {"a", "b", "c"}
+        // Set 结构的键值和键名是同一个值
+        console.log(ss.keys());     // 返回键名的比遍历器
+        console.log(ss.values());   // 返回键值的遍历器
+
+        for(let [i,v] of ss.entries()){
+            console.log(i+' '+v); 
+            // 打印 ：a a
+            //       b b
+            //       c c
+        }
+
+        ss.forEach(function(value,key){
+            console.log(key,value);
+            // 打印 ：a a
+            //       b b
+            //       c c
+        });
+
+
+        // WeakSet结构：    与Set不同的是，WeakSet的成员的必须是对象类型的值
+        var ws = new WeakSet([{"age":18}]);
+        console.log(ws);    // WeakSet {{…}}
+
+        var arr1 = [1];
+        var arr2 = [1,2];
+        var ws2 = new WeakSet([arr1,arr2]);
+        console.log(ws2);   // WeakSet {Array(2), Array(1)}
+
+        // WeakSet结构的add(),delete(),has()方法与Set结构相同
+        // 不同的是，WeakSetj结构不可遍历，因其成员都是对象的弱引用，随时可能被垃圾回收机制回收，
+        // 所以也就不会 keys(),values()，entries()方法，forEach()等方法和size属性
+
+
+        // Set 结构一个作用是可以轻松实现数组去重，再也不用去遍历元素
+        var arr3 = [1,2,2,3,4,4,4,5];
+        var ss3 = new Set(arr3);
+        console.log(ss3);       // Set(5) {1, 2, 3, 4, 5}
+        var newArr = Array.from(ss3);   // Array.from() 将类似数组的对象或者可遍历的对象转换成真正的数组。
+        console.log(newArr);    // (5) [1, 2, 3, 4, 5]
+
+    </script>
+</body>
+</html>

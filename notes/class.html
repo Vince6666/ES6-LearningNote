@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>class类</title>
+</head>
+<body>
+    <script>
+        // 在ES6之前，开发人员都是使用函数function和原型prototype来模拟面向对象编程，
+        // 这样写出来的代码往往冗长，而且很容易将原型链写错，
+        // 在ES6中，新增了class 的概念，实际上是对基于原型prototype的实现方法作了封装，它实际上也是用函数和原型实现的
+
+
+        // 定义一个Animal类
+        class Animal{
+            // 构造函数, 一定要有，且一定是唯一的
+            constructor(name){
+                this.name = name;
+            }
+            // 自定义方法
+            getName(){
+                return `This is a ${this.name}`;
+            }
+        }
+        // 必须先定义类，然后再创建实例，否则会报错
+        var dog = new Animal('dog');
+        console.log(dog.name);          // dog
+        console.log(dog.getName());     // This is a dog
+
+
+        
+        // 类的静态方法: 使用static关键字来标识，通过类名调用
+        class Animals{
+            constructor(name){
+                this.name = name;
+            }
+            // 静态方法
+            static friends(a1,a2){
+                return `${a1.name} and ${a2.name} are friends`;
+            }
+        }
+        var cat = new Animals('cat');
+        var duck = new Animals('duck');
+        var f = Animals.friends(cat,duck);
+        console.log(f);     //cat and duck are friends
+
+
+
+        // 类的继承
+        class Dog extends Animal{
+            // 关键字super相当于父类中的this，子类必须现在constructor方法中调用super方法，然后再使用this，否则报错
+            constructor(name,color){
+                super(name);
+                this.color = color;
+            }
+            getAttribute(){
+                return `${super.getName()},
+                        color:${this.color}`;
+            }
+        }
+        var d = new Dog("dog","black");
+        console.log(d.getAttribute());  //This is a dog,    color:black
+                        
+
+        // 现在并不是所有的主流浏览器都支持ES6的class。
+        // 如果一定要现在就用上，就需要一个工具把class代码转换为传统的prototype代码，可以试试Babel这个工具。
+
+
+        /* 总结：
+            ES6给JavaScript带来了class的概念和实现，它实际上是对传统方法的一种封装，
+            通过关键字class来定义类，通过extends来实现继承，
+            子类的super是父类的引用，相当于父类中的this，它必须在子类构造函数中调用
+
+        */
+
+    </script>
+</body>
+</html>

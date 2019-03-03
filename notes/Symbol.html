@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>symbol</title>
+</head>
+<body>
+    <script>
+        // Symbol 是ES6带来的一种新的数据类型，（其他6种：Number、String、Boolean、undefined、null、Object） 
+        // Symbol 的设计初衷是为了解决的对象的属性名冲突问题
+
+
+        let sm1 = Symbol();
+        console.log(sm1);    // Symbol()
+
+        let sm2 = Symbol();
+        console.log(sm2);    // Symbol()
+        console.log(sm1 === sm2);   // false
+
+        // Symbol() 是一个独一无二的值，即使值看起来一样，也还是不相等
+        let sm3 = Symbol('sm');
+        let sm4 = Symbol('sm');
+        console.log(sm3 === sm4);   // false
+
+
+        // 把一个symbol类型的值作为对象的属性名的时候，一定要用中括号[ ]，不能用点运算符，
+        // 因为用点运算符的话，会导致javascript把后面的属性名为理解为一个字符串类型，而不是symbol类型。
+        /*
+            let name = Symbol();
+            let person = {
+                [name]:"vince"
+            };
+            console.log(person.name);   // undefined
+            console.log(person[name]);  // vince
+        */
+
+        let name = Symbol();
+        let person = {};
+        person.name = "vince";      // 用点运算符设置属性名
+
+        console.log(person[name]);  // undefined,   这个语句相当于在person对象里面找一个Symbol类型的属性name，结果找不到
+        console.log(person["name"]);  //vince ,     person对象里面只有一个字符串类型的属性name，所以这一行能获取到
+        console.log(person.name);   // vince  ，    同样用点运算符也能获取到
+
+
+        /* 属性名的遍历 */
+        // 当Symbol类型的值作为属性名的时候，该属性不会出现在for...of和for...in中，也不能被Object.keys()获取到
+        
+        // 如果想获取Symbol类型的属性，可以用 Object.getOwnPropertySymbols()方法
+        let nam = Symbol("nam");
+        let age = Symbol("age");
+        let per = {
+            [nam]:"vince",      // 也可以先不声明，直接这样写：[Symbol('nam')]:"vince"
+            [age]:20,
+            "color":'white'
+        };
+        console.log(Object.getOwnPropertySymbols(per));     // [Symbol(nam), Symbol(age)]
+        console.log(Reflect.ownKeys(per));      // ["color", Symbol(nam), Symbol(age)], 获取所有属性
+
+
+        /* Symbol.for()函数:
+            根据参数名 在全局环境中搜索是否有 以该参数为名 的Symbol值，有则返回它，没有则以该参数为名来创建一个新的Symbol值
+         */
+        let n1 = Symbol.for("num");     // 找不到，创建
+        let n2 = Symbol.for("num");     // 找到上面那个，返回它
+        console.log(n1 === n2);     // true
+
+        // Symbol.for()创建的Symbol值会被登记在全局环境中，供Symbol.for()来搜索，而Symbol()创建的值没有这样的效果
+        let n3 = Symbol("vin");     // 创建的值并没有被登记在全局环境中
+        let n4 = Symbol.for("vin"); // 搜索不到，创建一个新的
+        console.log(n3 === n4);     // false
+
+        /* Symbol.keyFor()函数：
+            返回一个 被登记在全局环境中 的Symbol值的key,没有就返回undefined
+        */
+        let k1 = Symbol.for("kf");      // 登记在全局环境中
+        console.log(Symbol.keyFor(k1));  // kf
+
+        let k2 = Symbol("kf");
+        console.log(Symbol.keyFor(k2));     //undefined
+
+
+    </script>
+</body>
+</html>
