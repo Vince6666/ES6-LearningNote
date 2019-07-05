@@ -103,7 +103,7 @@
             console.log(result);        //  ["实例1操作成功", "实例2操作成功"]
         });
         /*  因为1000毫秒以后，实例pro2进入了成功fulfilled状态；此时，Promise.all( )还不会有所行动，
-            因为实例pro1还没有进入成功fulfilled状态；等到了5000毫秒以后，实例pro1也进入了成功fulfilled状态，
+            因为实例pro1还没有进入成功fulfilled状态；等到了4000毫秒以后，实例pro1也进入了成功fulfilled状态，
             Promise.all( )才会进入then方法，然后在控制台输出：["实例1操作成功","实例2操作成功"]。 
         */
 
