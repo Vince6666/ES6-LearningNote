@@ -1,2 +1,2 @@
-# ES6-LearningNote
-学习ES6过程中一些知识点的记录
+# Learning Record
+记录学习过程中的知识点或总结
