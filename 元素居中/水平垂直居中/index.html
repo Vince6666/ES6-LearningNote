@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="3">
+    <title>Document</title>
+    <style>
+        div{
+            border: 1px solid red;
+        }
+
+        /* .parent{
+            height: 150px;
+            position: relative;
+        }
+        .child{
+            width: 100px;height: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -50px 0 0 -50px;
+
+        } */
+
+        /* .parent{
+            height: 150px;
+            position: relative;
+        }
+        .child{
+            position: absolute;
+            width: 100px;height: 100px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+
+        } */
+
+        /* .parent{
+            height: 150px;
+            position: relative;
+        }
+        .child{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        } */
+
+        /* .parent{
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        } */
+        
+        .parent{
+            height: 150px;
+            display: grid; /*或flex*/
+        }
+        .child{
+            margin:auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="child">水平垂直居中的元素</div>
+    </div>
+    <script>
+        var i = 1;
+        console.log(i++) 
+    </script>
+    
+</body>
+</html>
