@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    #event-div {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="event-div" style="background: red"></div>
+  <script>
+    /**
+     * 一、事件对象获取方式：
+     *    1、通过回调函数的自定义参数获取(IE8及以下不支持)
+     *    2、通过 window.event 获取
+     *    3、也可以不传参数，这时事件对象默认是 event
+     * 
+     * 二、事件类型：通过 event.type 获取
+     * 
+     * 三、事件目标：触发事件的具体元素
+     *      获取方式：
+     *    1、event.target：  chrome、firefox、IE11 支持
+     *    2、event.currentTarget：chrome、firefox、IE11 支持
+     *    3、event.srcElement： chrome、firefox 62.0 以上 、IE 各版本 都支持
+     * 
+     */
+
+
+    var div = document.getElementById('event-div');
+    // div.addEventListener('click', function() { // 其他浏览器
+    //   console.log(event); // 支持，等同于 window.event
+    //   console.log(window.event) // 支持
+    //   console.log(event.type); // click
+    //   console.log(event.target); // chrome、firefox、IE11 支持： <div id="event-div"></div>
+    //   console.log(event.currentTarget); // chrome、firefox、IE11 支持
+    //   console.log(event.srcElement); // chrome、firefox 62.0 以上、IE 各版本 都支持
+    // })
+    // div.attachEvent('onclick', function(){ // IE8 -
+    //   console.log(event); // 支持，等同于 window.event
+    //   console.log(window.event) // 支持
+    //   console.log(event.type); // click
+    //   console.log(event.target); // 不支持
+    //   console.log(event.currentTarget); // 不支持
+    //   console.log(event.srcElement); // 支持
+    // })
+     
+    // 兼容：
+    div.onclick = function(e) {
+      e = e || event; // 获取事件对象
+      var target = e.target || e.srcElement; // 获取目标对象
+      // ....
+    }
+
+  </script>
+</body>
+</html>

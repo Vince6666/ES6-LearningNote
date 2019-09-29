@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      border: none;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    #div {
+      width: 200px;
+      height: 200px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div id="div"></div>
+  <script>
+    /**
+     * 1、IE8 及以下不支持 pageX，pageY
+     * 
+     * 
+     */
+
+    var div = document.getElementById('div');
+
+    div.onclick = function(e) {
+      e = e || event;
+      console.log(e)
+      console.log('clientX ' + e.clientX)
+      console.log('clientY ' + e.clientY)
+      console.log('screenX ' + e.screenX)
+      console.log('screenY ' + e.screenY)
+      console.log('pageX ' + e.pageX)
+      console.log('pageY ' + e.pageY)
+      console.log('x ' + e.x)
+      console.log('y ' + e.y)
+    }
+
+  </script>
+</body>
+</html>

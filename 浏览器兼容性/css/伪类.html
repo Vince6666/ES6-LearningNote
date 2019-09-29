@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    /* #div1 p:first-child { // ie8 有效
+      background-color: #ccc;
+    }
+    #div1 p:last-child {
+      background-color:  blue;
+    } */
+
+    /* 第二个 */
+    /* #div1 p:nth-child(2) { 
+      background-color:  red;
+    }
+    #div1 p:nth-last-child(1) {
+      background-color:  blue;
+    } */
+    /* 选择父元素中不是 p 的子元素 */
+    /* #div1 :not(p) {
+      background-color:  blue;
+    } */
+
+    /* 奇偶数 */
+    /* #div1 p:nth-child(odd) {
+      background-color: blue;
+    }
+    #div1 p:nth-child(even) {
+      background-color: red;
+    } */
+
+    /* 同类型 */
+    /* #div1 p:first-of-type {
+      background-color: red;
+    } */
+    /* p:first-of-type {
+      background-color: red;
+    }
+    p:last-of-type {
+      background-color: blue;
+    }
+    p:nth-of-type(3) {
+      background-color: blue;
+    }  */
+
+    span:only-child {
+      background-color: blue;
+    }
+  </style>
+</head>
+<body>
+  <!-- 
+      对于 IE8 ，只支持 :first-child 伪类，其他的都不支持
+
+   -->
+  <div id="div1">
+    <p>第一段</p>
+    <p>第二段<span>xxxx</span></p>
+    <p>第三段</p>
+    <p>第四段</p>
+    <p>第五段</p>
+    <span>yyyy</span>
+  </div>
+</body>
+</html>

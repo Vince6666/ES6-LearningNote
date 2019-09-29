@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #event-div {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="event-div"></div>
+  <script>
+    /**
+     * 一、向指定的元素添加/移除事件监听函数：
+     *  1、IE9及以上 和 其他浏览器: 
+     *     绑定事件： addEventListener(event, function, useCapture)
+     *     解除事件： removeEventListener(event, function, useCapture)
+     *  
+     *  2、IE8及以下：
+     *     绑定事件： attachEvent(on + 'event', function)
+     *     解除事件： detachEvent(on + 'event', function)
+     *  由于在IE8及更早的版本只支持事件冒泡，不支持事件捕获，所以最后一个参数默认为false
+     */
+    var div = document.getElementById('event-div');
+    // div.addEventListener('click', function() {
+    //   console.log(this);
+    // })
+
+    // 兼容写法：
+    function eventHandle(obj, event) {
+      if(obj.addEventListener) {
+        obj.addEventListener(event, function() {
+          console.log('success');
+        })
+      } else {
+        obj.attachEvent('on' + event, function() {
+          console.log('success');
+        })
+      }
+    }
+    
+    eventHandle(div, 'click');
+
+  </script>
+</body>
+</html>
